@@ -1,0 +1,72 @@
+#include<stdio.h>
+#include<cs50.h>
+#include<math.h>
+
+int main()
+{
+    long creditCardNum = get_long("Number: ");
+    int startingNum = 0;
+    int sumDigitsBy2 = 0;
+    int sumDigits = 0;
+    int numDigits = 0;
+
+    while(creditCardNum > 0) 
+    {
+        if (creditCardNum < 100 && creditCardNum > 9) 
+        {
+            startingNum = creditCardNum;
+        }
+
+        numDigits++;
+        
+        if (numDigits % 2 == 1) 
+        {
+            sumDigits += creditCardNum % 10;
+        } 
+        else 
+        {
+            int digitBy2 = (creditCardNum % 10) * 2;
+            while (digitBy2 > 0) 
+            {
+                sumDigitsBy2 += digitBy2 % 10;
+                digitBy2 = digitBy2 / 10;
+            }
+        }
+        
+        creditCardNum = creditCardNum / 10;
+    }
+
+    int validationResult = (sumDigits + sumDigitsBy2) % 10;
+
+    if (validationResult == 0)
+    {
+        if (numDigits == 15 && (startingNum == 34 || startingNum == 37)) 
+        {
+            printf("AMEX\n");
+        } 
+        else if (numDigits == 16 &&
+            (startingNum == 51 || 
+             startingNum == 52 || 
+             startingNum == 53 || 
+             startingNum == 54 ||
+             startingNum == 55)) 
+            {
+            printf("MASTERCARD\n");
+            } 
+        
+        else if (
+            (numDigits == 16 || numDigits == 13)
+            && (startingNum / 10) % 10 == 4) 
+            {
+            printf("VISA\n");
+            } 
+        else 
+            {
+            printf("INVALID\n");
+            }
+        } 
+        else 
+        {
+        printf("INVALID\n");
+        }
+}
